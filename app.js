@@ -262,7 +262,7 @@
       ${field("当前身份", choiceGroup("当前身份", ["企业负责人·老板", "股东或核心管理", "上班族", "投资理财为主", "全职照顾家庭", "自由职业·其他"], { value: a.当前身份 }), { required: true })}
       <div id="family-block" class="${showFamily ? "" : "hidden"}">
         ${field("家庭决策角色", choiceGroup("家庭决策角色", ["主要决策人", "与伴侣共同决定", "更能影响伴侣来参与", "暂不主导"], { value: a.家庭决策角色 }), { required: true, hint: "仅全职照顾家庭时填写" })}
-        ${field("是否希望家人一起参与", choiceGroup("家人一起参与", ["是", "否", "还不确定"], { value: a.家人一起参与 || "还不确定" })}
+        ${field("是否希望家人一起参与", choiceGroup("家人一起参与", ["是", "否", "还不确定"], { value: a.家人一起参与 || "还不确定" }))}
       </div>
       ${nav()}
     `;
@@ -278,7 +278,7 @@
       <div id="debt-detail" class="${hasDebt ? "" : "hidden"}">
         ${field("负债类型（可多选）", choiceGroup("负债类型", ["消费贷信用卡等", "经营负债", "创业负债", "投资负债", "房车按揭", "担保民间", "其他"], { multi: true, value: a.负债类型 }), { required: true })}
         ${field("合计负债量级", choiceGroup("负债量级", ["5万内", "5–20万", "20–50万", "50–100万", "100–300万", "300万+", "不便说"], { value: a.负债量级 }), { required: true })}
-        ${field("主要形成原因", choiceGroup("负债主因", ["经营周转", "创业未达预期", "投资亏损", "消费错配", "担保人情", "变故", "叠加", "其他"], { value: a.负债主因 })}
+        ${field("主要形成原因", choiceGroup("负债主因", ["经营周转", "创业未达预期", "投资亏损", "消费错配", "担保人情", "变故", "叠加", "其他"], { value: a.负债主因 }))}
       </div>
       ${nav()}
     `;
@@ -313,17 +313,37 @@
       <p class="step-desc">留下联系方式后提交。你会先看到七维定位；顾问后台会同步完整答卷。</p>
       ${field("联系方式（手机或微信号）", `<input type="text" data-key="联系方式" value="${esc(a.联系方式)}" placeholder="方便回访的联系方式" />`, { required: true })}
       ${field("当前最想突破的事", `<textarea data-key="最想突破的事" placeholder="一句话即可">${esc(a.最想突破的事)}</textarea>`, { required: true })}
-      ${field("希望获得的帮助", choiceGroup("希望获得的帮助", ["预约正式梳理（会议室）", "先了解陪跑/试听", "微信里先点清问题", "先自我观察", "还不确定"], { value: a.希望获得的帮助 })}
+      ${field("希望获得的帮助", choiceGroup("希望获得的帮助", ["预约正式梳理（会议室）", "先了解陪跑/试听", "微信里先点清问题", "先自我观察", "还不确定"], { value: a.希望获得的帮助 }))}
       ${state.submitError ? `<div class="error-banner">${esc(state.submitError)}</div>` : ""}
       ${nav({ nextLabel: "提交并查看定位", submit: true })}
     `;
+  }
+
+  function advisorSummaryText() {
+    const a = state.answers;
+    const s = state.scores || {};
+    const debtTypes = Array.isArray(a.负债类型) ? a.负债类型.join("、") : a.负债类型 || "—";
+    const weak = Array.isArray(s.七维最弱) ? s.七维最弱.join("、") : s.七维最弱 || "—";
+    return [
+      "【七维接粉·顾问摘要】",
+      "建议通道：" + (s.建议通道 || "—"),
+      "支付力：" + (s.支付力 || "—"),
+      "姓名：" + (a.姓名昵称 || "—"),
+      "联系方式：" + (a.联系方式 || "—"),
+      "身份：" + (a.当前身份 || "—") + (a.家庭决策角色 ? " / " + a.家庭决策角色 : ""),
+      "城市/年龄：" + (a.常住城市 || "—") + " / " + (a.年龄段 || "—"),
+      "负债：" + (a.负债压力 || "—") + " | " + debtTypes + " | " + (a.负债量级 || "—"),
+      "投入意向：" + (a.可接受投入 || "—") + " | 机动资金：" + (a.机动资金 || "—"),
+      "七维最弱：" + weak,
+      "均分：身" + (s.身均分 ?? "—") + " 意" + (s.意均分 ?? "—") + " 命" + (s.命均分 ?? "—") + " 心" + (s.心均分 ?? "—") + " 运" + (s.运均分 ?? "—") + " 神" + (s.神均分 ?? "—") + " 道" + (s.道均分 ?? "—"),
+      "最想突破：" + (a.最想突破的事 || "—"),
+    ].join("\n");
   }
 
   function renderResult() {
     const scores = state.scores;
     const copy = S.clientFacingCopy(scores, state.answers);
     const avgs = scores.七维均分明细 || {};
-    const weak = new Set(scores.七维最弱 || []);
     const bars = DIMS.map((d) => {
       const v = avgs[d] == null ? 0 : avgs[d];
       const pct = Math.max(0, Math.min(100, (v / 10) * 100));
@@ -337,7 +357,11 @@
         <div class="score-list">${bars}</div>
         <p><strong>建议优先关照：</strong>${tags || "—"}</p>
         <div class="copy">${esc(copy.body)}</div>
-        ${state.mockUsed ? `<div class="mock-badge">当前为 Mock 模式：答卷已在本地计分，未写入飞书。配置 FEISHU_PROXY_URL 并关闭 MOCK_MODE 后即可同步。</div>` : `<div class="mock-badge" style="color:var(--accent);background:var(--accent-soft)">已提交。顾问将按你的答卷匹配后续沟通方式。</div>`}
+        <div class="mock-badge" style="color:var(--accent);background:var(--accent-soft)">已完成自评。如需进一步沟通，可将下方摘要发给予心小师姐。</div>
+        <div class="nav" style="margin-top:16px">
+          <button type="button" class="btn primary" data-act="copy-advisor">复制摘要发给顾问</button>
+        </div>
+        <p class="step-desc" id="copy-hint" style="margin-top:8px"></p>
       </div>
     `;
   }
@@ -380,6 +404,20 @@
     el.main.querySelectorAll("[data-act]").forEach((btn) => {
       btn.addEventListener("click", onNav);
     });
+    const copyBtn = el.main.querySelector('[data-act="copy-advisor"]');
+    if (copyBtn) {
+      copyBtn.addEventListener("click", async () => {
+        const textOut = advisorSummaryText();
+        const hint = document.getElementById("copy-hint");
+        try {
+          await navigator.clipboard.writeText(textOut);
+          if (hint) hint.textContent = "已复制。可直接粘贴到微信发给顾问。";
+        } catch (err) {
+          window.prompt("复制下面全部内容发给顾问：", textOut);
+          if (hint) hint.textContent = "已弹出文本，请手动全选复制。";
+        }
+      });
+    }
     // live toggle family / debt detail
     el.main.querySelectorAll('input[name="当前身份"]').forEach((inp) => {
       inp.addEventListener("change", () => {
