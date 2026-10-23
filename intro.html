@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="答题是为了看清卡点、按翻转顺序给你更适合的方案；不是考试。全国可测，纯免费。" />
+  <title>七维通关测评 · 为你匹配更适合的方案</title>
+  <link rel="stylesheet" href="./intro.css" />
+</head>
+<body>
+  <main class="wrap">
+    <p class="badge">全国可测 · 纯免费</p>
+    <h1>七维通关测评 · 为你匹配更适合的方案</h1>
+    <p class="position">答题是为了看清卡点、按翻转顺序给你更适合的方案；不是考试。</p>
+
+    <section class="note">
+      <p>接下来的表单用来定位你的卡点，并按翻转顺序匹配一条更适合你的路径。先看下面两张通关卡，再开始答题即可。</p>
+    </section>
+
+    <a class="cta" data-start href="#">开始测评</a>
+
+    <figure class="poster">
+      <img
+        src="./assets/qiwetongguanka.png"
+        width="1700"
+        height="1904"
+        alt="七维通关卡：身、意、命、运、心、神、道七道题，用来看清卡在哪一维"
+      />
+      <figcaption>七维通关卡 · 看清卡在哪一维</figcaption>
+    </figure>
+
+    <figure class="poster">
+      <img
+        src="./assets/suan-tongguan.png"
+        width="1700"
+        height="1496"
+        alt="通关卡算通关：数出卡得最深的一维，并按死磕顺序先修这一维"
+        loading="lazy"
+      />
+      <figcaption>算通关 · 哪一维是 1 分，就先修哪一维</figcaption>
+    </figure>
+
+    <a class="cta" data-start href="#">开始测评</a>
+    <p class="foot">全国可测 · 纯免费 · 不是考试</p>
+  </main>
+
+  <script src="./config.js"></script>
+  <script>
+    (function () {
+      var cfg = window.SURVEY_CONFIG || {};
+      var url = cfg.INTRO_FORM_URL || cfg.FEISHU_FORM_URL || "";
+      if (!/^https:\/\//.test(url)) return;
+      var links = document.querySelectorAll("a[data-start]");
+      for (var i = 0; i < links.length; i++) links[i].href = url;
+    })();
+  </script>
+</body>
+</html>

@@ -1,8 +1,57 @@
-# 七维接粉问卷（GitHub Pages 静态站）
+# 七维通关测评
+
+对外主入口推荐：**说明页 → 飞书表单**。
+
+全国、纯免费。访客打开说明页，看清卡点与翻转顺序，再点「开始测评」进入飞书表单。表单地址只写在 `config.js` 的 `FEISHU_FORM_URL`（`INTRO_FORM_URL` 与它是同一处），换正式分享链接时改这一处即可。
+
+**旧七维接粉登记停用，待替换。** `index.html` 多步问卷仍留在仓库，不再作为对外入口。
+
+Pages 说明页：
+
+**https://sunp00788-dev.github.io/qiwei-survey/intro.html**
+
+## 本地预览
+
+```bash
+python3 -m http.server 8080
+```
+
+打开 http://127.0.0.1:8080/intro.html
+
+## 换正式飞书分享链接
+
+编辑 `config.js`：
+
+```js
+FEISHU_FORM_URL: "https://iakdvql5ohk.feishu.cn/share/base/form/PLACEHOLDER",
+```
+
+当前是占位链接。换成真实分享链接后提交，Pages 会更新说明页上的「开始测评」。不要在 `intro.html` 里再写一遍地址。
+
+## 目录
+
+```
+intro.html                      # 对外说明页
+intro.css
+assets/qiwetongguanka.png       # 七维通关卡
+assets/suan-tongguan.png        # 算通关
+config.js                       # 公开配置（含 FEISHU_FORM_URL）
+index.html                      # 旧七维接粉登记（停用待替换）
+styles.css
+scoring.js
+app.js
+README.md
+```
+
+---
+
+# 附录：旧七维接粉登记（停用待替换）
 
 手机可填的多步问卷：筛选字段 + 七维 28 题评分。  
 **学员结果页只展示七维快照**，不展示 A/B/C。  
 支付力与建议通道在浏览器内计算后，经 Cloudflare Worker 写入飞书多维表格（密钥只放在 Worker 环境变量，不进仓库）。
+
+此流程已停用，待替换。请对外发放说明页，不要再发 `index.html`。
 
 默认 `config.js` 为 **Mock 模式**：不请求网络，控制台打印完整 payload，并模拟提交成功。
 
@@ -146,18 +195,14 @@ Worker `worker/src/index.js` 中 `FIELD_MAP` 与下表一致。多选「负债�
 
 ---
 
-## 目录说明
+## 目录说明（旧问卷）
 
 ```
-qiwei-survey/
-  index.html          # 入口
-  config.js           # 公开配置（无密钥）
-  styles.css
-  scoring.js          # 支付力 / 通道 / 七维
-  app.js              # 多步表单与提交
-  fixtures/examples.json
-  worker/             # Cloudflare Worker 存根
-  README.md
+index.html          # 旧入口，停用待替换
+config.js           # 公开配置（无密钥）
+styles.css
+scoring.js          # 支付力 / 通道 / 七维
+app.js              # 多步表单与提交
 ```
 
 **切勿**把 `FEISHU_APP_SECRET` 写进前端或提交进 Git。

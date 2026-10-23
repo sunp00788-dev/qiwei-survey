@@ -1,0 +1,123 @@
+:root {
+  --bg: #0e0c09;
+  --ink: #f4ead7;
+  --gold: #e6c98a;
+  --gold-dim: #c4a56a;
+  --muted: #b7aa94;
+  --line: rgba(230, 201, 138, 0.38);
+  --card: #17140f;
+  --font: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  --serif: "Songti SC", "Noto Serif SC", "STSong", "SimSun", serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background:
+    radial-gradient(880px 420px at 50% -8%, rgba(230, 201, 138, 0.14), transparent 62%),
+    var(--bg);
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 28px 16px 56px;
+}
+
+.badge {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 4px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--gold);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-family: var(--serif);
+  font-size: 1.65rem;
+  font-weight: 650;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+}
+
+.position {
+  margin: 0 0 16px;
+  font-size: 1.02rem;
+}
+
+.note {
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.note p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.cta {
+  display: block;
+  margin: 0 0 22px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #f3dcab, #c6a15a);
+  color: #1a140c;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.18em;
+  text-align: center;
+  text-decoration: none;
+}
+
+.cta:hover { filter: brightness(1.06); }
+.cta:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.poster {
+  margin: 0 0 22px;
+}
+
+.poster img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #1a160f;
+}
+
+.poster figcaption {
+  margin-top: 8px;
+  color: var(--gold-dim);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.foot {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+@media (min-width: 720px) {
+  .wrap { padding-top: 48px; }
+  h1 { font-size: 2rem; }
+}
