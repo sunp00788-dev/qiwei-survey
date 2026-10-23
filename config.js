@@ -4,6 +4,6 @@ window.SURVEY_CONFIG = {
   MOCK_MODE: false,
   TITLE: "七维接粉问卷",
   SUBTITLE: "照见你的生命状态，并匹配更合适的沟通方式",
-  FEISHU_FORM_URL: "https://iakdvql5ohk.feishu.cn/share/base/form/PLACEHOLDER",
+  FEISHU_FORM_URL: "https://iakdvql5ohk.feishu.cn/share/base/shrcngDmeVui8mT8gSjCVHIk2cb",
 };
 window.SURVEY_CONFIG.INTRO_FORM_URL = window.SURVEY_CONFIG.FEISHU_FORM_URL;

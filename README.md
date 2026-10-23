@@ -18,15 +18,13 @@ python3 -m http.server 8080
 
 打开 http://127.0.0.1:8080/intro.html
 
-## 换正式飞书分享链接
+## 飞书表单
 
-编辑 `config.js`：
+表单名称：七维通关测评。地址只写在 `config.js` 的 `FEISHU_FORM_URL`，说明页「开始测评」读这一处（`INTRO_FORM_URL` 与它相同）。不要在 `intro.html` 里再写一遍。
 
 ```js
-FEISHU_FORM_URL: "https://iakdvql5ohk.feishu.cn/share/base/form/PLACEHOLDER",
+FEISHU_FORM_URL: "https://iakdvql5ohk.feishu.cn/share/base/shrcngDmeVui8mT8gSjCVHIk2cb",
 ```
-
-当前是占位链接。换成真实分享链接后提交，Pages 会更新说明页上的「开始测评」。不要在 `intro.html` 里再写一遍地址。
 
 ## 目录
 
